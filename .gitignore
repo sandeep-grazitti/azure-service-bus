@@ -1,0 +1,12 @@
+AzureServiceBus.Employee.API/bin/
+AzureServiceBus.Employee.API/obj/
+AzureServiceBus.Employee.Infrastructure/bin/
+AzureServiceBus.Employee.Infrastructure/obj/
+AzureServiceBus.Salary.API/bin/
+AzureServiceBus.Salary.API/obj/
+AzureServiceBus.Salary.Infrastructure/bin/
+AzureServiceBus.Salary.Infrastructure/obj/
+AzureServiceBusLibrary.EventBus/bin/
+AzureServiceBusLibrary.EventBus/obj/
+AzureServiceBusLibrary.EventLog/obj/
+AzureServiceBusLibrary.EventLog/bin/
