@@ -59,6 +59,7 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
         {
             _logger.LogInformation("Employee salary created successfully.");
             await _sqlDbContext.EmployeeSalaries.AddAsync(empSalary);
+            await _sqlDbContext.SaveChangesAsync();
             return empSalary;
         }
 
@@ -66,7 +67,7 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
         {
             _logger.LogInformation("Employee created successfully.");
             await _sqlDbContext.Employees.AddAsync(employee);
-            var count = await _sqlDbContext.SaveChangesAsync();
+            await _sqlDbContext.SaveChangesAsync();
             return employee;
         }
 

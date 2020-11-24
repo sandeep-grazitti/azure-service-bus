@@ -47,6 +47,7 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
             {
                 await _empSalaryRepository.AddEmployeeSalaryAsync(new EmployeeSalary()
                 {
+                    EmployeeId = employeeId,
                     Salary = newSalary,
                     StartDate = startDate,
                     EndDate = endDate

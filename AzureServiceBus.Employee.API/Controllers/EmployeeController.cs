@@ -67,9 +67,8 @@ namespace AzureServiceBus.Employee.API.Controllers
 
             // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
             await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
-
             await _employeeDbContext.SaveChangesAsync();
-            return Ok(addedEmployee);
+            return Ok(employee.Id);
         }
 
 
@@ -90,14 +89,14 @@ namespace AzureServiceBus.Employee.API.Controllers
             {
                 _employeeDbContext.Employees.Update(existingEmployee);
                 var eployeeChangedEvent = new EmployeeChangedIntegrationEvent(existingEmployee.Id,
-                    existingEmployee.FirstName,
-                    existingEmployee.LastName,
-                    existingEmployee.Address,
-                    existingEmployee.Contact,
-                    existingEmployee.DepartmentName,
-                    existingEmployee.JoiningDate,
-                    existingEmployee.EmpCode,
-                    existingEmployee.IsActive);
+                    employeeToUpdate.FirstName,
+                    employeeToUpdate.LastName,
+                    employeeToUpdate.Address,
+                    employeeToUpdate.Contact,
+                    employeeToUpdate.DepartmentName,
+                    employeeToUpdate.JoiningDate,
+                    employeeToUpdate.EmpCode,
+                    employeeToUpdate.IsActive);
 
                // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
                 await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);

@@ -11,3 +11,7 @@ AzureServiceBusLibrary.EventBus/obj/
 AzureServiceBusLibrary.EventLog/obj/
 AzureServiceBusLibrary.EventLog/bin/
 /.vs/AzureServiceBusApiV1
+/AzureServiceBus.Gateway.API/obj
+/AzureServiceBus.Identity.API/bin/Debug/netcoreapp3.1
+/AzureServiceBus.Identity.API/obj
+/AzureServiceBus.Gateway.API/bin/Debug/netcoreapp3.1

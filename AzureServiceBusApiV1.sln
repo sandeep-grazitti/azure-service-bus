@@ -21,6 +21,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Salary.Infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Employee.Infrastructure", "AzureServiceBus.Employee.Infrastructure\AzureServiceBus.Employee.Infrastructure.csproj", "{659691B0-E4CE-43C7-B6CC-2E445051C059}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{25D9230E-2989-4DDF-A7DD-EC91C3593018}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F7411D9D-9D11-4370-AB7B-D76B495B6EA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Identity.API", "AzureServiceBus.Identity.API\AzureServiceBus.Identity.API.csproj", "{5C5B84C6-1AC9-4621-AE5F-EFFD1A3DDB6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Gateway.API", "AzureServiceBus.Gateway.API\AzureServiceBus.Gateway.API.csproj", "{9C9819D9-4891-49D6-ACA8-A5E104B0572F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +59,14 @@ Global
 		{659691B0-E4CE-43C7-B6CC-2E445051C059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{659691B0-E4CE-43C7-B6CC-2E445051C059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{659691B0-E4CE-43C7-B6CC-2E445051C059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C5B84C6-1AC9-4621-AE5F-EFFD1A3DDB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C5B84C6-1AC9-4621-AE5F-EFFD1A3DDB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C5B84C6-1AC9-4621-AE5F-EFFD1A3DDB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C5B84C6-1AC9-4621-AE5F-EFFD1A3DDB6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9819D9-4891-49D6-ACA8-A5E104B0572F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9819D9-4891-49D6-ACA8-A5E104B0572F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9819D9-4891-49D6-ACA8-A5E104B0572F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9819D9-4891-49D6-ACA8-A5E104B0572F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +78,8 @@ Global
 		{B4DB0D2B-1282-48D5-BB11-22DAF3C225CF} = {63F2F2B8-1E43-4B0D-9EA6-288BC9EB1ED5}
 		{25D7A453-6753-4C8C-86A6-F039A032D62B} = {714CC78E-4DD9-4AF1-B7F1-9EC15A68A71E}
 		{659691B0-E4CE-43C7-B6CC-2E445051C059} = {63F2F2B8-1E43-4B0D-9EA6-288BC9EB1ED5}
+		{5C5B84C6-1AC9-4621-AE5F-EFFD1A3DDB6D} = {25D9230E-2989-4DDF-A7DD-EC91C3593018}
+		{9C9819D9-4891-49D6-ACA8-A5E104B0572F} = {F7411D9D-9D11-4370-AB7B-D76B495B6EA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFB094C-8ADF-4B0B-9796-3A15200F3782}

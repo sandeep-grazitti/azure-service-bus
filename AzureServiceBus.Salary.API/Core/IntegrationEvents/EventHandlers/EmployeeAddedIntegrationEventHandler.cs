@@ -23,11 +23,24 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
         public async Task HandleAsync(EmployeeAddIntegrationEvent @event)
         {
             _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", @event.Id, @event);
-            await _empSalaryRepository.AddEmployeeAsync(new Employee()
+            var newEmployee = new Employee()
             {
                 EmployeeId = @event.EmployeeId,
                 FirstName = @event.FirstName,
                 LastName = @event.LastName
+            };
+            newEmployee = await _empSalaryRepository.AddEmployeeAsync(newEmployee);
+            await AddSalaryForEmployee(@event.EmployeeId, @event.Salary, @event.StartDate, @event.EndDate);
+        }
+
+        private async Task AddSalaryForEmployee(Guid employeeId, decimal? salary, DateTime? startDate, DateTime? endDate)
+        {
+            await _empSalaryRepository.AddEmployeeSalaryAsync(new EmployeeSalary()
+            {
+                EmployeeId = employeeId,
+                Salary = salary ?? decimal.Zero,
+                StartDate = startDate,
+                EndDate = endDate
             });
         }
     }
