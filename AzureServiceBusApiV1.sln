@@ -13,13 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBusLibrary.Even
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Salary", "Salary", "{714CC78E-4DD9-4AF1-B7F1-9EC15A68A71E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureServiceBus.Salary.API", "AzureServiceBus.Salary.API\AzureServiceBus.Salary.API.csproj", "{184ABE41-EADD-4B7C-8D47-F4BC9AEEB27F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Salary.API", "AzureServiceBus.Salary.API\AzureServiceBus.Salary.API.csproj", "{184ABE41-EADD-4B7C-8D47-F4BC9AEEB27F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Employee.API", "AzureServiceBus.Employee.API\AzureServiceBus.Employee.API.csproj", "{B4DB0D2B-1282-48D5-BB11-22DAF3C225CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Salary.Infrastructure", "AzureServiceBus.Salary.Infrastructure\AzureServiceBus.Salary.Infrastructure.csproj", "{25D7A453-6753-4C8C-86A6-F039A032D62B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureServiceBus.Employee.Infrastructure", "AzureServiceBus.Employee.Infrastructure\AzureServiceBus.Employee.Infrastructure.csproj", "{659691B0-E4CE-43C7-B6CC-2E445051C059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureServiceBus.Employee.Infrastructure", "AzureServiceBus.Employee.Infrastructure\AzureServiceBus.Employee.Infrastructure.csproj", "{659691B0-E4CE-43C7-B6CC-2E445051C059}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
