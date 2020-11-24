@@ -83,6 +83,7 @@ namespace AzureServiceBusLibrary.EventBus
                 }
                 catch (ServiceBusException ex)
                 {
+                    var errorMessage = ex.Message;
                     _logger.LogWarning("The messaging entity '{eventName}' already exists.", eventName);
                 }
             }

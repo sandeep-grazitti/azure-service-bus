@@ -6,8 +6,17 @@ using Microsoft.Extensions.Options;
 
 namespace AzureServiceBus.Salary.API.Core.DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ConfigurationServiceCollectionExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
         public static IServiceCollection AddAppConfiguration(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<SqlDbDataServiceConfiguration>(config.GetSection("SqlDbSettings"));

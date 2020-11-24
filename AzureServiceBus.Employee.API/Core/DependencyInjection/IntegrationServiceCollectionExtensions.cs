@@ -15,8 +15,16 @@ using AzureServiceBusLibrary.EventLog.Services.Interfaces;
 
 namespace AzureServiceBus.Employee.API.Core.DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class IntegrationServiceCollectionExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddIntegrationServices(this IServiceCollection services)
         {
             var serviceProvider = services.BuildServiceProvider();

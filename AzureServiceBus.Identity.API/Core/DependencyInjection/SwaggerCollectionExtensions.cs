@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace AzureServiceBus.Salary.API.Core.DependencyInjection
+namespace AzureServiceBus.Identity.API.Core.DependencyInjection
 {
     /// <summary>
     /// 
@@ -20,7 +20,7 @@ namespace AzureServiceBus.Salary.API.Core.DependencyInjection
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Employee Salary API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Authentication API", Version = "v1" });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

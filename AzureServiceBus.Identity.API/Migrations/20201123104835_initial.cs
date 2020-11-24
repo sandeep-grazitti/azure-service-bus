@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AzureServiceBus.Identity.API.Migrations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class initial : Migration
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -194,6 +201,10 @@ namespace AzureServiceBus.Identity.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

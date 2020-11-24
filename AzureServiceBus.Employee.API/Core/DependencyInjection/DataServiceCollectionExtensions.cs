@@ -10,8 +10,16 @@ using AzureServiceBusLibrary.EventLog;
 
 namespace AzureServiceBus.Employee.API.Core.DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class DataServiceCollectionExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddDataService(this IServiceCollection services)
         {
             var serviceProvider = services.BuildServiceProvider();

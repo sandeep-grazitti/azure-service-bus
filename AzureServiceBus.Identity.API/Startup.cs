@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AzureServiceBus.Identity.API.Core.DependencyInjection;
 using AzureServiceBus.Identity.API.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -19,16 +20,30 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AzureServiceBus.Identity.API
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             #region Identity Config
@@ -44,7 +59,6 @@ namespace AzureServiceBus.Identity.API
                 .AddEntityFrameworkStores<UserDbContext>()
                 .AddDefaultTokenProviders();
             #endregion
-
             #region DbContext
             services.AddDbContext<UserDbContext>(dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("AppDbContext")));
             #endregion
@@ -72,10 +86,18 @@ namespace AzureServiceBus.Identity.API
                 };
             });
             #endregion
+            services.AddSwagger();
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="userManager"></param>
+        /// <param name="roleManager"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             if (env.IsDevelopment())
@@ -83,6 +105,7 @@ namespace AzureServiceBus.Identity.API
                 app.UseDeveloperExceptionPage();
             }
             DataInitializer.SeedData(userManager, roleManager);
+            app.UseSwaggerServices();
             app.UseHttpsRedirection();
 
             app.UseRouting();

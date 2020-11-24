@@ -3,8 +3,16 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AzureServiceBus.Identity.API
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DataInitializer
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="roleManager"></param>
         public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             SeedRoles(roleManager);

@@ -8,11 +8,19 @@ using AzureServiceBus.Salary.Infrastructure.Interfaces;
 
 namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class EmployeeAddedIntegrationEventHandler : IIntegrationEventHandler<EmployeeAddIntegrationEvent>
     {
         private readonly ILogger<EmployeeAddedIntegrationEventHandler> _logger;
         private readonly IEmployeeSalaryRepository _empSalaryRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="empSalaryRepository"></param>
         public EmployeeAddedIntegrationEventHandler(ILogger<EmployeeAddedIntegrationEventHandler> logger,
                                                             IEmployeeSalaryRepository empSalaryRepository)
         {
@@ -20,6 +28,11 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
             _empSalaryRepository = empSalaryRepository ?? throw new ArgumentNullException(nameof(empSalaryRepository));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="event"></param>
+        /// <returns></returns>
         public async Task HandleAsync(EmployeeAddIntegrationEvent @event)
         {
             _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", @event.Id, @event);

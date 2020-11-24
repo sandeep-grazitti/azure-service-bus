@@ -14,6 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AzureServiceBus.Identity.API.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -22,6 +25,12 @@ namespace AzureServiceBus.Identity.API.Controllers
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IConfiguration configuration;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="configuration"></param>
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
         {
             this.userManager = userManager;

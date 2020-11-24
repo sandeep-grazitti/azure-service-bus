@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AzureServiceBus.Employee.API.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
@@ -18,6 +21,11 @@ namespace AzureServiceBus.Employee.API.Controllers
         private readonly EmployeeDbContext _employeeDbContext;
         private readonly IEmployeeIntegrationEventService _employeeIntegrationEventService;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeDbContext"></param>
+        /// <param name="employeeIntegrationEventService"></param>
         public EmployeeController(EmployeeDbContext employeeDbContext,
             IEmployeeIntegrationEventService employeeIntegrationEventService)
         {

@@ -6,8 +6,16 @@ using System.Reflection;
 
 namespace AzureServiceBus.Employee.API.Core.DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class SwaggerCollectionExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>

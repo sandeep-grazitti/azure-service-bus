@@ -13,6 +13,9 @@ namespace AzureServiceBus.Identity.API.Migrations
     [Migration("20201123104835_initial")]
     partial class initial
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
