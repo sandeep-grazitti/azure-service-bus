@@ -1,12 +1,10 @@
-﻿using AzureServiceBus.Employee.Infrastructure.Configuration;
-using AzureServiceBus.Employee.Infrastructure.Configuration.Interfaces;
-using AzureServiceBus.Employee.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using AzureServiceBus.Salary.Infrastructure.Configuration;
+using AzureServiceBus.Salary.Infrastructure.Configuration.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace AzureServiceBus.Employee.API.Core.DependencyInjection
+namespace AzureServiceBus.Salary.API.Core.DependencyInjection
 {
     public static class ConfigurationServiceCollectionExtensions
     {

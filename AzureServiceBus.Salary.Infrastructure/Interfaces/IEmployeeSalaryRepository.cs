@@ -1,4 +1,5 @@
-﻿using AzureServiceBus.Salary.Infrastructure.Entities;
+﻿using System.Collections.Generic;
+using AzureServiceBus.Salary.Infrastructure.Entities;
 using System.Threading.Tasks;
 
 namespace AzureServiceBus.Salary.Infrastructure.Interfaces
@@ -8,5 +9,8 @@ namespace AzureServiceBus.Salary.Infrastructure.Interfaces
         Task<EmployeeSalary> GetEmployeeSalaryAsync(string employeeId);
         Task<EmployeeSalary> UpdateEmployeeSalaryAsync(EmployeeSalary employeeSalary);
         void DeleteEmployeeSalary(EmployeeSalary employeeSalary);
+        Task<IList<Employee>> GetEmployees();
+        Task<EmployeeSalary> AddEmployeeSalaryAsync(EmployeeSalary empSalary);
+        Task<Employee> AddEmployeeAsync(Employee employee);
     }
 }

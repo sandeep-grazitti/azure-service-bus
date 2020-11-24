@@ -35,10 +35,10 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
             return salaryByEmployee;
         }
 
-        public async Task<EmployeeSalary> UpdateEmployeeSalaryAsync(EmployeeSalary reservation)
+        public async Task<EmployeeSalary> UpdateEmployeeSalaryAsync(EmployeeSalary empSalary)
         {
             var salaryByEmployee =
-                await _sqlDbContext.EmployeeSalaries.FirstOrDefaultAsync(x => x.EmployeeId == reservation.EmployeeId);
+                await _sqlDbContext.EmployeeSalaries.FirstOrDefaultAsync(x => x.EmployeeId == empSalary.EmployeeId);
 
             if (salaryByEmployee == null)
             {
@@ -47,7 +47,27 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
             }
 
             _logger.LogInformation("Employee salary retrieved successfully.");
-            return await GetEmployeeSalaryAsync(reservation.EmployeeId.ToString());
+            return await GetEmployeeSalaryAsync(empSalary.EmployeeId.ToString());
+        }
+
+        public async Task<IList<Employee>> GetEmployees()
+        {
+            return await _sqlDbContext.Employees.ToListAsync();
+        }
+
+        public async Task<EmployeeSalary> AddEmployeeSalaryAsync(EmployeeSalary empSalary)
+        {
+            _logger.LogInformation("Employee salary created successfully.");
+            await _sqlDbContext.EmployeeSalaries.AddAsync(empSalary);
+            return empSalary;
+        }
+
+        public async Task<Employee> AddEmployeeAsync(Employee employee)
+        {
+            _logger.LogInformation("Employee created successfully.");
+            await _sqlDbContext.Employees.AddAsync(employee);
+            var count = await _sqlDbContext.SaveChangesAsync();
+            return employee;
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using AzureServiceBus.Salary.Infrastructure.Entities;
+﻿using System;
+using AzureServiceBus.Salary.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AzureServiceBus.Salary.Infrastructure.Data
@@ -10,6 +11,7 @@ namespace AzureServiceBus.Salary.Infrastructure.Data
         {
         }
 
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

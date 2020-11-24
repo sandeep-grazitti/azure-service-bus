@@ -61,8 +61,15 @@ namespace AzureServiceBus.Employee.API.Controllers
         public async Task<IActionResult> AddEmployeeAsync([FromBody] Infrastructure.Entities.Employee employee)
         {
             var addedEmployee = _employeeDbContext.Add(employee);
+            var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
+                employee.FirstName,
+                employee.LastName);
+
+            // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
+            await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
+
             await _employeeDbContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetEmployeeAsync), new { id = addedEmployee.Entity.Id });
+            return Ok(addedEmployee);
         }
 
 
@@ -79,7 +86,6 @@ namespace AzureServiceBus.Employee.API.Controllers
             {
                 return NotFound(new { Message = $"Employee with id {employeeToUpdate.Id} not found." });
             }
-
             else
             {
                 _employeeDbContext.Employees.Update(existingEmployee);
@@ -93,7 +99,7 @@ namespace AzureServiceBus.Employee.API.Controllers
                     existingEmployee.EmpCode,
                     existingEmployee.IsActive);
 
-                await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
+               // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
                 await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
 
                 await _employeeDbContext.SaveChangesAsync();

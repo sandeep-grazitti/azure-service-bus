@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureServiceBus.Salary.API.Core.DependencyInjection;
+using AzureServiceBus.Salary.Infrastructure.Interfaces;
+using AzureServiceBus.Salary.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +29,12 @@ namespace AzureServiceBus.Salary.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddAppConfiguration(Configuration);
+            services.AddDataService();
+
+            services.AddIntegrationServices();
+            services.AddSwagger();
             services.AddControllers();
         }
 
@@ -36,6 +46,7 @@ namespace AzureServiceBus.Salary.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwaggerServices();
             app.UseHttpsRedirection();
 
             app.UseRouting();
