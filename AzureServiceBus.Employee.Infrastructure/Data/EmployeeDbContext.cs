@@ -27,7 +27,11 @@ namespace AzureServiceBus.Employee.Infrastructure.Data
                         Contact = "",
                         JoiningDate = DateTime.Now,
                         EmpCode = Guid.NewGuid().ToString(),
-                        IsActive = true
+                        IsActive = true,
+                        CreatedBy = "",
+                        CreatedOn = DateTime.Now,
+                        ModifiedBy = "",
+                        ModifiedOn = DateTime.Now
                     },
                     new Entities.Employee
                     {
@@ -39,7 +43,11 @@ namespace AzureServiceBus.Employee.Infrastructure.Data
                         Contact = "",
                         JoiningDate = DateTime.Now,
                         EmpCode = Guid.NewGuid().ToString(),
-                        IsActive = true
+                        IsActive = true,
+                        CreatedBy = "",
+                        CreatedOn = DateTime.Now,
+                        ModifiedBy = "",
+                        ModifiedOn = DateTime.Now
                     },
                     new Entities.Employee
                     {
@@ -51,7 +59,11 @@ namespace AzureServiceBus.Employee.Infrastructure.Data
                         Contact = "",
                         JoiningDate = DateTime.Now,
                         EmpCode = Guid.NewGuid().ToString(),
-                        IsActive = true
+                        IsActive = true,
+                        CreatedBy = "",
+                        CreatedOn = DateTime.Now,
+                        ModifiedBy = "",
+                        ModifiedOn = DateTime.Now
                     }
                 );
         }
