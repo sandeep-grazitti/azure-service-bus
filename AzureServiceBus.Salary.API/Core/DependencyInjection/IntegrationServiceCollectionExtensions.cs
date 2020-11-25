@@ -32,6 +32,7 @@ namespace AzureServiceBus.Salary.API.Core.DependencyInjection
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddTransient<IIntegrationEventHandler<EmployeeChangedIntegrationEvent>, EmployeeSalaryChangedIntegrationEventHandler>();
+            services.AddTransient<IIntegrationEventHandler<EmployeeChangedIntegrationEvent>, EmployeeChangedIntegrationEventHandler>();
             services.AddTransient<IIntegrationEventHandler<EmployeeAddIntegrationEvent>, EmployeeAddedIntegrationEventHandler>();
 
             services.AddSingleton<IServiceBusConnectionManagementService>(sp =>

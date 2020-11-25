@@ -49,12 +49,16 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                     $"{nameof(EmployeeSalaryChangedIntegrationEventHandler)} - Updating employee salary: {empSalary.EmployeeId}",
                     empSalary.EmployeeId);
 
-                if (empSalary.Salary == oldSalary)
+                if (empSalary.Salary != oldSalary)
                 {
                     empSalary.Salary = newSalary;
-                }
+                    empSalary.StartDate = startDate;
+                    empSalary.EndDate = endDate;
+                    empSalary.ModifiedOn = DateTime.Now;
+                    empSalary.ModifiedBy = "";
 
-                await _empSalaryRepository.UpdateEmployeeSalaryAsync(empSalary);
+                    await _empSalaryRepository.UpdateEmployeeSalaryAsync(empSalary);
+                }
             }
             else
             {
@@ -63,7 +67,11 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                     EmployeeId = employeeId,
                     Salary = newSalary,
                     StartDate = startDate,
-                    EndDate = endDate
+                    EndDate = endDate,
+                    CreatedBy = "",
+                    CreatedOn = DateTime.Now,
+                    ModifiedBy = "",
+                    ModifiedOn = DateTime.Now
                 });
             }
         }

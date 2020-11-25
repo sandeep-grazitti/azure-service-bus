@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AzureServiceBus.Employee.API.Core.IntegrationEvents.Events;
 using AzureServiceBus.Employee.Infrastructure.Data;
+using AzureServiceBus.Employee.Infrastructure.Interfaces;
 using AzureServiceBus.Employee.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,18 @@ namespace AzureServiceBus.Employee.API.Controllers
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeDbContext _employeeDbContext;
+        private readonly IEmployeeRepository _employeeService;
         private readonly IEmployeeIntegrationEventService _employeeIntegrationEventService;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="employeeDbContext"></param>
+        /// <param name="employeeService"></param>
         /// <param name="employeeIntegrationEventService"></param>
-        public EmployeeController(EmployeeDbContext employeeDbContext,
+        public EmployeeController(IEmployeeRepository employeeService,
             IEmployeeIntegrationEventService employeeIntegrationEventService)
         {
-            _employeeDbContext = employeeDbContext;
+            _employeeService = employeeService;
             _employeeIntegrationEventService = employeeIntegrationEventService;
         }
 
@@ -41,7 +42,7 @@ namespace AzureServiceBus.Employee.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEmployeesAsync()
         {
-            var employees = await _employeeDbContext.Employees.ToListAsync();
+            var employees = await _employeeService.ListAllAsync();
             return Ok(employees);
         }
 
@@ -53,7 +54,7 @@ namespace AzureServiceBus.Employee.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeAsync(Guid id)
         {
-            var employee = await _employeeDbContext.Employees.FirstOrDefaultAsync(i => i.Id == id);
+            var employee = await _employeeService.GetByIdAsync(id);
             if (employee == null)
             {
                 return NotFound(new { Message = $"Employee with id {id} not found." });
@@ -69,14 +70,13 @@ namespace AzureServiceBus.Employee.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployeeAsync([FromBody] Infrastructure.Entities.Employee employee)
         {
-            var addedEmployee = _employeeDbContext.Add(employee);
+            var addedEmployee = _employeeService.AddEmployee(employee);
             var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
                 employee.FirstName,
                 employee.LastName);
 
             // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
             await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
-            await _employeeDbContext.SaveChangesAsync();
             return Ok(employee.Id);
         }
 
@@ -89,28 +89,43 @@ namespace AzureServiceBus.Employee.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<ActionResult> UpdateEmployeeAsync([FromBody] Infrastructure.Entities.Employee employeeToUpdate)
         {
-            var existingEmployee = await _employeeDbContext.Employees.FirstOrDefaultAsync(i => i.Id == employeeToUpdate.Id);
+            var existingEmployee = await _employeeService.GetByIdAsync(employeeToUpdate.Id);
             if (existingEmployee == null)
             {
                 return NotFound(new { Message = $"Employee with id {employeeToUpdate.Id} not found." });
             }
             else
             {
-                _employeeDbContext.Employees.Update(existingEmployee);
-                var eployeeChangedEvent = new EmployeeChangedIntegrationEvent(existingEmployee.Id,
-                    employeeToUpdate.FirstName,
-                    employeeToUpdate.LastName,
-                    employeeToUpdate.Address,
-                    employeeToUpdate.Contact,
-                    employeeToUpdate.DepartmentName,
-                    employeeToUpdate.JoiningDate,
-                    employeeToUpdate.EmpCode,
-                    employeeToUpdate.IsActive);
+                // Update Employee
+                existingEmployee.FirstName = employeeToUpdate.FirstName;
+                existingEmployee.LastName = employeeToUpdate.LastName;
+                existingEmployee.Address = employeeToUpdate.Address;
+                existingEmployee.Contact = employeeToUpdate.Contact;
+                existingEmployee.DepartmentName = employeeToUpdate.DepartmentName;
+                existingEmployee.EmpCode = employeeToUpdate.EmpCode;
+                existingEmployee.IsActive = employeeToUpdate.IsActive;
+                existingEmployee.JoiningDate = employeeToUpdate.JoiningDate;
 
-               // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
+                // Subscribe Event
+                var eployeeChangedEvent = new EmployeeChangedIntegrationEvent(employeeId: existingEmployee.Id,
+                    firstName: employeeToUpdate.FirstName,
+                    lastName: employeeToUpdate.LastName,
+                    address: employeeToUpdate.Address,
+                    contact: employeeToUpdate.Contact,
+                    departmentName: employeeToUpdate.DepartmentName,
+                    joiningDate: employeeToUpdate.JoiningDate,
+                    empCode: employeeToUpdate.EmpCode,
+                    isActive: employeeToUpdate.IsActive,
+                    // Default Values For Salary
+                    salary: 2000,
+                    startDate: DateTime.Now,
+                    endDate: DateTime.Now.AddDays(90));
+
+                // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
                 await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
 
-                await _employeeDbContext.SaveChangesAsync();
+                // Commit Update Employee
+                await _employeeService.UpdateEmployee(existingEmployee);
                 return NoContent();
             }
         }

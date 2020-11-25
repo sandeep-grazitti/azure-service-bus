@@ -73,9 +73,12 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.Events
         /// <param name="joiningDate"></param>
         /// <param name="empCode"></param>
         /// <param name="isActive"></param>
+        /// <param name="salary"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         public EmployeeChangedIntegrationEvent(Guid employeeId, string firstName = null, string lastName = null,
             string address = null, string contact = null, string departmentName = null, DateTime? joiningDate = null,
-            string empCode = null, bool? isActive = null)
+            string empCode = null, bool? isActive = null, decimal? salary = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             EmployeeId = employeeId;
 
@@ -102,6 +105,15 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.Events
 
             if (isActive.HasValue)
                 IsActive = isActive.Value;
+
+            if (salary.HasValue && salary != decimal.Zero)
+                NewSalary = salary.Value;
+
+            if (startDate.HasValue && startDate.Value != DateTime.MinValue)
+                StartDate = startDate.Value;
+
+            if (endDate.HasValue && endDate.Value != DateTime.MinValue)
+                EndDate = endDate.Value;
         }
     }
 }

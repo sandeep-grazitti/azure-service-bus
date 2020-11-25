@@ -21,29 +21,33 @@ namespace AzureServiceBus.Employee.Infrastructure.Repositories
             _logger = logger;
         }
 
-        public Entities.Employee Add(Entities.Employee employee)
+        public async Task<Entities.Employee> AddEmployee(Entities.Employee employee)
         {
             employee.Id = Guid.NewGuid();
-            return _sqlDbContext.Employees.Add(employee).Entity;
+            _sqlDbContext.Employees.Add(employee);
+            await _sqlDbContext.SaveChangesAsync();
+            return employee;
         }
 
-        public void Delete(Entities.Employee employee)
+        public async Task DeleteEmployee(Entities.Employee employee)
         {
             _sqlDbContext.Employees.Remove(employee);
+            await _sqlDbContext.SaveChangesAsync();
         }
 
         public async Task<Entities.Employee> GetByIdAsync(Guid id)
         {
             var employee = await _sqlDbContext.Employees
-                                    .Where(e => e.Id == id)
-                                    .FirstOrDefaultAsync();
+                .Where(e => e.Id.ToString().ToLower() == id.ToString().ToLower())
+                .FirstOrDefaultAsync();
             return employee;
 
         }
 
-        public void Update(Entities.Employee employee)
+        public async Task UpdateEmployee(Entities.Employee employee)
         {
-            _sqlDbContext.Update(_sqlDbContext);
+            _sqlDbContext.Employees.Update(employee);
+            await _sqlDbContext.SaveChangesAsync();
         }
 
         public async Task<IList<Entities.Employee>> ListAllAsync()

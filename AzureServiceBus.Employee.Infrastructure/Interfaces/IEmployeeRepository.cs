@@ -10,8 +10,8 @@ namespace AzureServiceBus.Employee.Infrastructure.Interfaces
     {
         Task<Entities.Employee> GetByIdAsync(Guid id);
         Task<IList<Entities.Employee>> ListAllAsync();
-        Entities.Employee Add(Entities.Employee employee);
-        void Update(Entities.Employee employee);
-        void Delete(Entities.Employee employee);
+        Task<Entities.Employee> AddEmployee(Entities.Employee employee);
+        Task UpdateEmployee(Entities.Employee employee);
+        Task DeleteEmployee(Entities.Employee employee);
     }
 }

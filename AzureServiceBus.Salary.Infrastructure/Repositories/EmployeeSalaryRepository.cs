@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AzureServiceBus.Salary.Infrastructure.Data;
@@ -22,32 +23,43 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
             _sqlDbContext = sqlDbContext;
         }
 
-        public void DeleteEmployeeSalary(EmployeeSalary employeeSalary)
+        public async Task DeleteEmployeeSalary(EmployeeSalary employeeSalary)
         {
             _sqlDbContext.EmployeeSalaries.Remove(employeeSalary);
+            await _sqlDbContext.SaveChangesAsync();
         }
 
         public async Task<EmployeeSalary> GetEmployeeSalaryAsync(string employeeId)
         {
             var salaryByEmployee =
-                await _sqlDbContext.EmployeeSalaries.FirstOrDefaultAsync(x => x.EmployeeId.ToString() == employeeId);
+                await _sqlDbContext.EmployeeSalaries.FirstOrDefaultAsync(x =>
+                    x.EmployeeId.ToString().ToLower() == employeeId.ToString().ToLower());
 
             return salaryByEmployee;
         }
 
-        public async Task<EmployeeSalary> UpdateEmployeeSalaryAsync(EmployeeSalary empSalary)
+        public async Task UpdateEmployeeSalaryAsync(EmployeeSalary empSalary)
         {
             var salaryByEmployee =
-                await _sqlDbContext.EmployeeSalaries.FirstOrDefaultAsync(x => x.EmployeeId == empSalary.EmployeeId);
+                await _sqlDbContext.EmployeeSalaries.FirstOrDefaultAsync(x =>
+                    x.EmployeeId.ToString().ToLower() == empSalary.EmployeeId.ToString().ToLower());
 
             if (salaryByEmployee == null)
             {
                 _logger.LogInformation("Problem occured while retrieving salary!");
-                return null;
             }
-
-            _logger.LogInformation("Employee salary retrieved successfully.");
-            return await GetEmployeeSalaryAsync(empSalary.EmployeeId.ToString());
+            else
+            {
+                _logger.LogInformation("Employee salary retrieved successfully.");
+                salaryByEmployee.EmployeeId = empSalary.EmployeeId;
+                salaryByEmployee.Salary = empSalary.Salary;
+                salaryByEmployee.StartDate = empSalary.StartDate;
+                salaryByEmployee.EndDate = empSalary.EndDate;
+                salaryByEmployee.ModifiedBy = "";
+                salaryByEmployee.ModifiedOn = empSalary.ModifiedOn;
+                _sqlDbContext.EmployeeSalaries.Update(salaryByEmployee);
+                await _sqlDbContext.SaveChangesAsync();
+            }
         }
 
         public async Task<IList<Employee>> GetEmployees()
@@ -71,5 +83,34 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
             return employee;
         }
 
+        public async Task<Entities.Employee> GetEmployeeByIdAsync(Guid id)
+        {
+            var employee = await _sqlDbContext.Employees
+                .Where(e => e.EmployeeId.ToString().ToLower() == id.ToString().ToLower())
+                .FirstOrDefaultAsync();
+            return employee;
+
+        }
+
+        public async Task UpdateEmployeeAsync(Employee employee)
+        {
+            var existingEmployee =
+                await _sqlDbContext.Employees.FirstOrDefaultAsync(x =>
+                    x.EmployeeId.ToString().ToLower() == employee.EmployeeId.ToString().ToLower());
+
+            if (existingEmployee == null)
+            {
+                _logger.LogInformation("Problem occured while retrieving salary!");
+            }
+            else
+            {
+                _logger.LogInformation("Employee retrieved successfully.");
+
+                existingEmployee.FirstName = employee.FirstName;
+                existingEmployee.LastName = employee.LastName;
+                _sqlDbContext.Employees.Update(existingEmployee);
+                await _sqlDbContext.SaveChangesAsync();
+            }
+        }
     }
 }

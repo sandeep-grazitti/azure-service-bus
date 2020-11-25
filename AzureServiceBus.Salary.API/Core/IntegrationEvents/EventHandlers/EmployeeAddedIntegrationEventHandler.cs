@@ -53,7 +53,11 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                 EmployeeId = employeeId,
                 Salary = salary ?? decimal.Zero,
                 StartDate = startDate,
-                EndDate = endDate
+                EndDate = endDate,
+                CreatedBy = "",
+                CreatedOn = DateTime.Now,
+                ModifiedBy = "",
+                ModifiedOn = DateTime.Now
             });
         }
     }

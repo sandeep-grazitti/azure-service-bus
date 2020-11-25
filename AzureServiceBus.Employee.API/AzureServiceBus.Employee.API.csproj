@@ -25,4 +25,8 @@
     <ProjectReference Include="..\AzureServiceBusLibrary.EventLog\AzureServiceBusLibrary.EventLog.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\Mappers\" />
+  </ItemGroup>
+
 </Project>
