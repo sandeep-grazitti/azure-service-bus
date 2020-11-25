@@ -79,7 +79,8 @@ namespace AzureServiceBus.Employee.API.Controllers
             var addedEmployee = _employeeService.AddEmployee(employee);
             var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
                 employee.FirstName,
-                employee.LastName);
+                employee.LastName,
+                employee.ModifiedBy);
 
             // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
             await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
@@ -100,7 +101,6 @@ namespace AzureServiceBus.Employee.API.Controllers
                 return NotFound(new { Message = $"You are not authorized to add employee." });
 
             employeeToUpdate.ModifiedBy = userIdentity;
-
             var existingEmployee = await _employeeService.GetByIdAsync(employeeToUpdate.Id);
             if (existingEmployee == null)
             {
