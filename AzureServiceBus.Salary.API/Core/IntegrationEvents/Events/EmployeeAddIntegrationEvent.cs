@@ -32,6 +32,10 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.Events
         /// 
         /// </summary>
         public DateTime? EndDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ModifiedBy { get; set; }
 
         /// <summary>
         /// 
@@ -42,7 +46,8 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.Events
         /// <param name="salary"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
-        public EmployeeAddIntegrationEvent(Guid employeeId, string firstName = null, string lastName = null, decimal? salary = null, DateTime? startDate = null, DateTime? endDate = null)
+        /// <param name="modifiedBy"></param>
+        public EmployeeAddIntegrationEvent(Guid employeeId, string firstName = null, string lastName = null, decimal? salary = null, DateTime? startDate = null, DateTime? endDate = null, string modifiedBy = null)
         {
             EmployeeId = employeeId;
             FirstName = firstName;
@@ -50,6 +55,7 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.Events
             Salary = salary;
             StartDate = startDate;
             EndDate = endDate;
+            ModifiedBy = modifiedBy;
         }
     }
 }

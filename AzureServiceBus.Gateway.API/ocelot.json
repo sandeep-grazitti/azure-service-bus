@@ -14,6 +14,11 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
         "AllowScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+      "AddHeadersToRequest": {
+        "claims_userid": "Claims[UserId] > value > |"
       }
     },
     {
@@ -30,6 +35,11 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
         "AllowScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+      "AddHeadersToRequest": {
+        "claims_userid": "Claims[UserId] > value > |"
       }
     },
     {
@@ -46,6 +56,11 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
         "AllowScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+      "AddHeadersToRequest": {
+        "claims_userid": "Claims[UserId] > value > |"
       }
     },
     {
@@ -62,6 +77,11 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
         "AllowScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+      "AddHeadersToRequest": {
+        "claims_userid": "Claims[UserId] > value > |"
       }
     },
     {

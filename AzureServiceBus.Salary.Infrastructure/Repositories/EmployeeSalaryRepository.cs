@@ -55,7 +55,7 @@ namespace AzureServiceBus.Salary.Infrastructure.Repositories
                 salaryByEmployee.Salary = empSalary.Salary;
                 salaryByEmployee.StartDate = empSalary.StartDate;
                 salaryByEmployee.EndDate = empSalary.EndDate;
-                salaryByEmployee.ModifiedBy = "";
+                salaryByEmployee.ModifiedBy = empSalary.ModifiedBy;
                 salaryByEmployee.ModifiedOn = empSalary.ModifiedOn;
                 _sqlDbContext.EmployeeSalaries.Update(salaryByEmployee);
                 await _sqlDbContext.SaveChangesAsync();

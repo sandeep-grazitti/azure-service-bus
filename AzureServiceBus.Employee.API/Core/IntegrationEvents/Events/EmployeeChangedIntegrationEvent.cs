@@ -57,6 +57,10 @@ namespace AzureServiceBus.Employee.API.Core.IntegrationEvents.Events
         /// 
         /// </summary>
         public DateTime? EndDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ModifiedBy { get; set; }
 
         /// <summary>
         /// 
@@ -73,9 +77,10 @@ namespace AzureServiceBus.Employee.API.Core.IntegrationEvents.Events
         /// <param name="salary"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
+        /// <param name="modifiedBy"></param>
         public EmployeeChangedIntegrationEvent(Guid employeeId, string firstName = null, string lastName = null,
             string address = null, string contact = null, string departmentName = null, DateTime? joiningDate = null,
-            string empCode = null, bool? isActive = null, decimal? salary = null, DateTime? startDate = null, DateTime? endDate = null)
+            string empCode = null, bool? isActive = null, decimal? salary = null, DateTime? startDate = null, DateTime? endDate = null, string modifiedBy = null)
         {
             EmployeeId = employeeId;
 
@@ -111,6 +116,9 @@ namespace AzureServiceBus.Employee.API.Core.IntegrationEvents.Events
 
             if (endDate.HasValue && endDate.Value != DateTime.MinValue)
                 EndDate = endDate.Value;
+
+            if (!string.IsNullOrEmpty(modifiedBy))
+                ModifiedBy = modifiedBy;
         }
     }
 }

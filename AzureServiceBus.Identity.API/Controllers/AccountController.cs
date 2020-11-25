@@ -21,9 +21,9 @@ namespace AzureServiceBus.Identity.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly IConfiguration configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IConfiguration _configuration;
 
         /// <summary>
         /// 
@@ -31,15 +31,16 @@ namespace AzureServiceBus.Identity.API.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="configuration"></param>
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+            IConfiguration configuration)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.configuration = configuration;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+            this._configuration = configuration;
         }
 
         /// <summary>
-        /// Return User details with Token when authenticated sucesfully
+        /// Return User details with Token when authenticated successfully
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -53,16 +54,16 @@ namespace AzureServiceBus.Identity.API.Controllers
             {
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                     return BadRequest("UserName or Password is blank!");
-                var user = await userManager.FindByEmailAsync(username);
+                var user = await _userManager.FindByEmailAsync(username);
                 if (user != null)
                 {
-                    var checkPassword = await userManager.CheckPasswordAsync(user, password);
+                    var checkPassword = await _userManager.CheckPasswordAsync(user, password);
                     ApplicationUser applicationUser;
                     if (!checkPassword)
                         return BadRequest("Pasword doesn't match!");
                     else
                     {
-                        var roles = await userManager.GetRolesAsync(user);
+                        var roles = await _userManager.GetRolesAsync(user);
                         applicationUser = new ApplicationUser
                         {
                             Id = user.Id,
@@ -91,17 +92,18 @@ namespace AzureServiceBus.Identity.API.Controllers
                 new Claim(ClaimTypes.Email, appUser.Email),
                 new Claim(ClaimTypes.Name, appUser.UserName),
                 new Claim(ClaimTypes.NameIdentifier, appUser.Id),
-                new Claim(ClaimTypes.Role, appUser.Role)
+                new Claim(ClaimTypes.Role, appUser.Role),
+                new Claim("UserId", appUser.Id)
             };
             claimsIdentity.AddClaims(claims);
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
-              configuration["Jwt:Audience"],
+            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+              _configuration["Jwt:Audience"],
               new ClaimsIdentity(claimsIdentity)?.Claims,
-              expires: DateTime.UtcNow.AddHours(Convert.ToDouble(configuration["Jwt:Expires"])),
+              expires: DateTime.UtcNow.AddHours(Convert.ToDouble(_configuration["Jwt:Expires"])),
               signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

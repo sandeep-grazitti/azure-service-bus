@@ -20,6 +20,10 @@ namespace AzureServiceBus.Employee.API.Core.IntegrationEvents.Events
         /// 
         /// </summary>
         public string LastName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ModifiedBy { get; set; }
 
         /// <summary>
         /// 
@@ -27,11 +31,13 @@ namespace AzureServiceBus.Employee.API.Core.IntegrationEvents.Events
         /// <param name="employeeId"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
-        public EmployeeAddIntegrationEvent(Guid employeeId, string firstName = null, string lastName = null)
+        /// <param name="modifiedBy"></param>
+        public EmployeeAddIntegrationEvent(Guid employeeId, string firstName = null, string lastName = null, string modifiedBy = null)
         {
             EmployeeId = employeeId;
             FirstName = firstName;
             LastName = lastName;
+            ModifiedBy = modifiedBy;
         }
     }
 }

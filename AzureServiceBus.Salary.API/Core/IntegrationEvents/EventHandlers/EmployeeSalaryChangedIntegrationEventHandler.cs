@@ -37,10 +37,11 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
         {
             _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", @event.Id, @event);
             var employeeSalary = await _empSalaryRepository.GetEmployeeSalaryAsync(@event.EmployeeId.ToString());
-            await UpdateSalaryForEmployee(@event.EmployeeId, @event.NewSalary, @event.OldSalary, @event.StartDate, @event.EndDate, employeeSalary);
+            await UpdateSalaryForEmployee(@event.EmployeeId, @event.NewSalary, @event.OldSalary, @event.StartDate,
+                @event.EndDate, @event.ModifiedBy, employeeSalary);
         }
 
-        private async Task UpdateSalaryForEmployee(Guid employeeId, decimal newSalary, decimal oldSalary, DateTime? startDate, DateTime? endDate,
+        private async Task UpdateSalaryForEmployee(Guid employeeId, decimal newSalary, decimal oldSalary, DateTime? startDate, DateTime? endDate, string modifiedBy,
             EmployeeSalary empSalary)
         {
             if (empSalary != null)
@@ -55,7 +56,7 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                     empSalary.StartDate = startDate;
                     empSalary.EndDate = endDate;
                     empSalary.ModifiedOn = DateTime.Now;
-                    empSalary.ModifiedBy = "";
+                    empSalary.ModifiedBy = modifiedBy;
 
                     await _empSalaryRepository.UpdateEmployeeSalaryAsync(empSalary);
                 }
@@ -68,9 +69,9 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                     Salary = newSalary,
                     StartDate = startDate,
                     EndDate = endDate,
-                    CreatedBy = "",
+                    CreatedBy = modifiedBy,
                     CreatedOn = DateTime.Now,
-                    ModifiedBy = "",
+                    ModifiedBy = modifiedBy,
                     ModifiedOn = DateTime.Now
                 });
             }

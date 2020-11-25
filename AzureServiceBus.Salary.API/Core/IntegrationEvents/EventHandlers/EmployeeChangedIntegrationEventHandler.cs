@@ -52,7 +52,7 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                     existingSalary.EndDate = @event.EndDate;
                     existingSalary.Salary = @event.NewSalary;
                     existingSalary.ModifiedOn = DateTime.Now;
-                    existingSalary.ModifiedBy = "";
+                    existingSalary.ModifiedBy = @event.ModifiedBy;
 
                     await _empSalaryRepository.UpdateEmployeeSalaryAsync(existingSalary);
                 }
@@ -64,9 +64,9 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                         Salary = @event.NewSalary,
                         StartDate = @event.StartDate,
                         EndDate = @event.EndDate,
-                        CreatedBy = "",
+                        CreatedBy = @event.ModifiedBy,
                         CreatedOn = DateTime.Now,
-                        ModifiedBy = "",
+                        ModifiedBy = @event.ModifiedBy,
                         ModifiedOn = DateTime.Now
                     });
                 }

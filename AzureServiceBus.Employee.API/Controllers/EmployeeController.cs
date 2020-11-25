@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AzureServiceBus.Employee.API.Core.IntegrationEvents.Events;
 using AzureServiceBus.Employee.Infrastructure.Data;
@@ -70,6 +71,11 @@ namespace AzureServiceBus.Employee.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployeeAsync([FromBody] Infrastructure.Entities.Employee employee)
         {
+            var userIdentity = Request.Headers["claims_userid"];
+            if(userIdentity.Count == 0)
+                return NotFound(new { Message = $"You are not authorized to add employee." });
+
+            employee.CreatedBy = employee.ModifiedBy = userIdentity;
             var addedEmployee = _employeeService.AddEmployee(employee);
             var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
                 employee.FirstName,
@@ -89,6 +95,12 @@ namespace AzureServiceBus.Employee.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<ActionResult> UpdateEmployeeAsync([FromBody] Infrastructure.Entities.Employee employeeToUpdate)
         {
+            var userIdentity = Request.Headers["claims_userid"];
+            if (userIdentity.Count == 0)
+                return NotFound(new { Message = $"You are not authorized to add employee." });
+
+            employeeToUpdate.ModifiedBy = userIdentity;
+
             var existingEmployee = await _employeeService.GetByIdAsync(employeeToUpdate.Id);
             if (existingEmployee == null)
             {
@@ -105,6 +117,7 @@ namespace AzureServiceBus.Employee.API.Controllers
                 existingEmployee.EmpCode = employeeToUpdate.EmpCode;
                 existingEmployee.IsActive = employeeToUpdate.IsActive;
                 existingEmployee.JoiningDate = employeeToUpdate.JoiningDate;
+                existingEmployee.ModifiedBy = employeeToUpdate.ModifiedBy;
 
                 // Subscribe Event
                 var eployeeChangedEvent = new EmployeeChangedIntegrationEvent(employeeId: existingEmployee.Id,
@@ -116,6 +129,7 @@ namespace AzureServiceBus.Employee.API.Controllers
                     joiningDate: employeeToUpdate.JoiningDate,
                     empCode: employeeToUpdate.EmpCode,
                     isActive: employeeToUpdate.IsActive,
+                    modifiedBy: employeeToUpdate.ModifiedBy,
                     // Default Values For Salary
                     salary: 2000,
                     startDate: DateTime.Now,
