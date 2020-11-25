@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AzureServiceBus.Employee.API.Core.IntegrationEvents.Events;
 using AzureServiceBus.Employee.Infrastructure.Data;
 using AzureServiceBus.Employee.Infrastructure.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace AzureServiceBus.Employee.API.Controllers
     /// 
     /// </summary>
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {

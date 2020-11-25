@@ -41,23 +41,23 @@ namespace AzureServiceBus.Identity.API.Controllers
         /// <summary>
         /// Return User details with Token when authenticated sucesfully
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="Password"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("LoginAsync")]
+        [Route("login")]
         [ProducesResponseType(typeof(IReadOnlyList<ApplicationUser>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> LoginAsync(string userName, string Password)
+        public async Task<IActionResult> LoginAsync(string username, string password)
         {
             try
             {
-                ApplicationUser applicationUser;
-                if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(Password))
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                     return BadRequest("UserName or Password is blank!");
-                var user = await userManager.FindByEmailAsync(userName);
+                var user = await userManager.FindByEmailAsync(username);
                 if (user != null)
                 {
-                    var checkPassword = await userManager.CheckPasswordAsync(user, Password);
+                    var checkPassword = await userManager.CheckPasswordAsync(user, password);
+                    ApplicationUser applicationUser;
                     if (!checkPassword)
                         return BadRequest("Pasword doesn't match!");
                     else
@@ -75,7 +75,7 @@ namespace AzureServiceBus.Identity.API.Controllers
                     return Ok(applicationUser);
                 }
                 else
-                    return NotFound("You are not authorized to sign into this website.");
+                    return NotFound("You are not authorized to sign in!");
             }
             catch(Exception ex)
             {
@@ -85,8 +85,8 @@ namespace AzureServiceBus.Identity.API.Controllers
 
         private string GenerateJSONWebToken(ApplicationUser appUser)
         {
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity();
-            List<Claim> claims = new List<Claim>
+            var claimsIdentity = new ClaimsIdentity();
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, appUser.Email),
                 new Claim(ClaimTypes.Name, appUser.UserName),

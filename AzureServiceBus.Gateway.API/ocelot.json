@@ -1,15 +1,15 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Values/GetValues",
+      "DownstreamPathTemplate": "/api/employee",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44335
+          "Port": 44365
         }
       ],
-      "UpstreamPathTemplate": "/getvalues",
+      "UpstreamPathTemplate": "/getemployees",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
@@ -17,7 +17,55 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Account/LoginAsync",
+      "DownstreamPathTemplate": "/api/employee/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44365
+        }
+      ],
+      "UpstreamPathTemplate": "/getemployee/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/employee",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44365
+        }
+      ],
+      "UpstreamPathTemplate": "/addemployee",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/employee",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44365
+        }
+      ],
+      "UpstreamPathTemplate": "/updateemployee",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/account/login/{username}/{password}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -25,7 +73,7 @@
           "Port": 44317
         }
       ],
-      "UpstreamPathTemplate": "/Authenticate",
+      "UpstreamPathTemplate": "/authenticate",
       "UpstreamHttpMethod": [ "POST" ]
     }
   ],
