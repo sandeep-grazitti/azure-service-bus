@@ -30,7 +30,7 @@ namespace AzureServiceBus.Gateway.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var TestKey = Configuration.GetSection("Jwt:Key");
+            var testKey = Configuration.GetSection("Jwt:Key");
             #region Jwt
             services.AddAuthentication(options =>
             {

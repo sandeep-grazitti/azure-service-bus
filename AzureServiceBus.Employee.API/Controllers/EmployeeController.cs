@@ -16,7 +16,6 @@ namespace AzureServiceBus.Employee.API.Controllers
     /// 
     /// </summary>
     [ApiController]
-    [Authorize]
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {

@@ -65,7 +65,7 @@ namespace AzureServiceBus.Employee.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

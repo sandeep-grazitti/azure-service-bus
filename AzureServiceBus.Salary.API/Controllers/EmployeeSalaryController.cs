@@ -12,7 +12,6 @@ namespace AzureServiceBus.Salary.API.Controllers
     /// 
     /// </summary>
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class EmployeeSalaryController : ControllerBase
     {
