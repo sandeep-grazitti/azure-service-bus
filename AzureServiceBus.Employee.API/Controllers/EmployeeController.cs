@@ -77,6 +77,7 @@ namespace AzureServiceBus.Employee.API.Controllers
 
             employee.CreatedBy = employee.ModifiedBy = userIdentity;
             var addedEmployee = _employeeService.AddEmployee(employee);
+
             var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
                 employee.FirstName,
                 employee.LastName,
@@ -84,6 +85,7 @@ namespace AzureServiceBus.Employee.API.Controllers
 
             // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
             await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
+
             return Ok(employee.Id);
         }
 

@@ -16,6 +16,12 @@ namespace AzureServiceBus.Salary.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Entities.EmployeeSalary>(b =>
+            {
+                b.HasKey(e => e.Id);
+                b.Property(e => e.Id).ValueGeneratedOnAdd();
+                b.Property(e => e.Salary).HasColumnType("decimal(18,2)");
+            });
         }
     }
 }

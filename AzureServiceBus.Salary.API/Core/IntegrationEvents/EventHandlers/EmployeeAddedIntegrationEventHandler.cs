@@ -43,10 +43,10 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                 LastName = @event.LastName
             };
             newEmployee = await _empSalaryRepository.AddEmployeeAsync(newEmployee);
-            await AddSalaryForEmployee(@event.EmployeeId, @event.Salary, @event.StartDate, @event.EndDate);
+            await AddSalaryForEmployee(@event.EmployeeId, @event.Salary, @event.StartDate, @event.EndDate, @event.ModifiedBy);
         }
 
-        private async Task AddSalaryForEmployee(Guid employeeId, decimal? salary, DateTime? startDate, DateTime? endDate)
+        private async Task AddSalaryForEmployee(Guid employeeId, decimal? salary, DateTime? startDate, DateTime? endDate, string modifiedBy = null)
         {
             await _empSalaryRepository.AddEmployeeSalaryAsync(new EmployeeSalary()
             {
@@ -54,9 +54,9 @@ namespace AzureServiceBus.Salary.API.Core.IntegrationEvents.EventHandlers
                 Salary = salary ?? decimal.Zero,
                 StartDate = startDate,
                 EndDate = endDate,
-                CreatedBy = "",
+                CreatedBy = modifiedBy,
                 CreatedOn = DateTime.Now,
-                ModifiedBy = "",
+                ModifiedBy = modifiedBy,
                 ModifiedOn = DateTime.Now
             });
         }

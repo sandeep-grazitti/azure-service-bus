@@ -23,8 +23,8 @@ namespace AzureServiceBus.Employee.Infrastructure.Repositories
 
         public async Task<Entities.Employee> AddEmployee(Entities.Employee employee)
         {
-            employee.Id = Guid.NewGuid();
-            _sqlDbContext.Employees.Add(employee);
+            //employee.Id = Guid.NewGuid();
+            await _sqlDbContext.Employees.AddAsync(employee);
             await _sqlDbContext.SaveChangesAsync();
             return employee;
         }

@@ -16,6 +16,11 @@ namespace AzureServiceBus.Employee.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Entities.Employee>(b =>
+            {
+                b.HasKey(e => e.Id);
+                b.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
             modelBuilder.Entity<Entities.Employee>().HasData(
                     new Entities.Employee
                     {
