@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2020-11-26T08:39:38.6964679Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2020-11-26T08:13:57.0619377Z"
+    },
+    "appInsights1": {
+      "restored": true,
+      "restoreTime": "2020-11-26T08:39:40.1677554Z"
+    }
+  },
+  "parameters": {
+    "appInsights1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "4629ee4b-0142-458e-9229-49ab61342f28"
+    },
+    "appInsights1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "ServiceBusSampleV1"
+    }
+  }
+}

@@ -40,6 +40,7 @@ namespace AzureServiceBus.Employee.API
             services.AddSwagger();
             services.AddModelValidators();
             services.AddControllers().AddFluentValidation();
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,7 +66,6 @@ namespace AzureServiceBus.Employee.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

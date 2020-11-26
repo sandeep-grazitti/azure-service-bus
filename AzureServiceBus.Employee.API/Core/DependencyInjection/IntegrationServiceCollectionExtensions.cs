@@ -7,6 +7,7 @@ using System.Data.Common;
 using AzureServiceBus.Employee.Infrastructure.Services;
 using AzureServiceBus.Employee.Infrastructure.Services.Interfaces;
 using AzureServiceBusLibrary.EventBus;
+using AzureServiceBusLibrary.EventBus.Events;
 using AzureServiceBusLibrary.EventBus.Events.Interfaces;
 using AzureServiceBusLibrary.EventBus.Services;
 using AzureServiceBusLibrary.EventBus.Services.Interfaces;
@@ -32,6 +33,7 @@ namespace AzureServiceBus.Employee.API.Core.DependencyInjection
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddTransient<IEmployeeIntegrationEventService, EmployeeIntegrationEventService>();
+            services.AddTransient<ILogger, Logger<IntegrationEvent>>();
 
             services.AddSingleton<IServiceBusConnectionManagementService>(sp =>
             {

@@ -11,6 +11,7 @@ using AzureServiceBus.Employee.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace AzureServiceBus.Employee.API.Controllers
 {
@@ -23,17 +24,20 @@ namespace AzureServiceBus.Employee.API.Controllers
     {
         private readonly IEmployeeRepository _employeeService;
         private readonly IEmployeeIntegrationEventService _employeeIntegrationEventService;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="employeeService"></param>
         /// <param name="employeeIntegrationEventService"></param>
+        /// <param name="logger"></param>
         public EmployeeController(IEmployeeRepository employeeService,
-            IEmployeeIntegrationEventService employeeIntegrationEventService)
+            IEmployeeIntegrationEventService employeeIntegrationEventService, ILogger logger)
         {
             _employeeService = employeeService;
             _employeeIntegrationEventService = employeeIntegrationEventService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -72,20 +76,21 @@ namespace AzureServiceBus.Employee.API.Controllers
         public async Task<IActionResult> AddEmployeeAsync([FromBody] Infrastructure.Entities.Employee employee)
         {
             var userIdentity = Request.Headers["claims_userid"];
-            if(userIdentity.Count == 0)
+            if (userIdentity.Count == 0)
                 return NotFound(new { Message = $"You are not authorized to add employee." });
 
             employee.CreatedBy = employee.ModifiedBy = userIdentity;
-            var addedEmployee = _employeeService.AddEmployee(employee);
 
             var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
                 employee.FirstName,
                 employee.LastName,
                 employee.ModifiedBy);
 
-            // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
+            await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
             await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
 
+            // Commit Add Employee
+            var addedEmployee = _employeeService.AddEmployee(employee);
             return Ok(employee.Id);
         }
 
@@ -137,7 +142,7 @@ namespace AzureServiceBus.Employee.API.Controllers
                     startDate: DateTime.Now,
                     endDate: DateTime.Now.AddDays(90));
 
-                // await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
+                await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
                 await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
 
                 // Commit Update Employee

@@ -44,9 +44,9 @@ namespace AzureServiceBus.Employee.Infrastructure.Services
         {
             try
             {
-                //await _eventLogService.MarkEventAsInProgressAsync(@event.Id);
+                await _eventLogService.MarkEventAsInProgressAsync(@event.Id);
                 await _eventBus.PublishAsync(@event);
-               // await _eventLogService.MarkEventAsPublishedAsync(@event.Id);
+                await _eventLogService.MarkEventAsPublishedAsync(@event.Id);
             }
             catch (Exception ex)
             {

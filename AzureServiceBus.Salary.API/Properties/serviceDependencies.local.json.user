@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2020-11-26T08:58:37.7870548Z"
+    },
+    "appInsights1": {
+      "restored": true,
+      "restoreTime": "2020-11-26T08:58:48.3013428Z"
+    }
+  },
+  "parameters": {
+    "appInsights1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "4629ee4b-0142-458e-9229-49ab61342f28"
+    },
+    "appInsights1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "ServiceBusSampleV1"
+    }
+  }
+}

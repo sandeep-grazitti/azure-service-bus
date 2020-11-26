@@ -50,6 +50,7 @@ namespace AzureServiceBus.Salary.API
             services.AddIntegrationServices();
             services.AddSwagger();
             services.AddControllers();
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +70,6 @@ namespace AzureServiceBus.Salary.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
