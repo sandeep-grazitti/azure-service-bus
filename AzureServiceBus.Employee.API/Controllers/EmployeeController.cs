@@ -81,17 +81,25 @@ namespace AzureServiceBus.Employee.API.Controllers
 
             employee.CreatedBy = employee.ModifiedBy = userIdentity;
 
-            var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
-                employee.FirstName,
-                employee.LastName,
-                employee.ModifiedBy);
+            try
+            {
+                // Commit Add Employee
+                var addedEmployee = await _employeeService.AddEmployee(employee);
 
-            await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
-            await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
+                var eployeeChangedEvent = new EmployeeAddIntegrationEvent(employee.Id,
+                    employee.FirstName,
+                    employee.LastName,
+                    employee.ModifiedBy);
 
-            // Commit Add Employee
-            var addedEmployee = _employeeService.AddEmployee(employee);
-            return Ok(employee.Id);
+                await _employeeIntegrationEventService.AddAndSaveEventAsync(eployeeChangedEvent);
+                await _employeeIntegrationEventService.PublishEventsThroughEventBusAsync(eployeeChangedEvent);
+
+                return Ok(employee.Id);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
 
